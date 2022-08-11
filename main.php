@@ -49,4 +49,13 @@ class Deck{
             echo $this->deck[$i]->getCardString().PHP_EOL;
         }
     }
+
+    function shuffleDeck(){
+        for ($i = count($this->deck) - 1; $i >= 0; $i--){
+            $j = mt_rand($i, count($this->deck) - 1);
+            $temp = $this->deck[$i];
+            $this->deck[$i] = $this->deck[$j];
+            $this->deck[$j] = $temp;
+        }
+    }
 }
