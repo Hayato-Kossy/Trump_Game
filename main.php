@@ -26,7 +26,7 @@ class Deck{
         $this->deck = $this->generateDeck();
     }
 
-    function generateDeck(){
+    function generateDeck(): array{
         //生成されるデッキ
         $new_Deck = [];
 
