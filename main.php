@@ -58,4 +58,8 @@ class Deck{
             $this->deck[$j] = $temp;
         }
     }
+
+    function draw(){
+        return array_pop($this->deck);
+    }
 }
