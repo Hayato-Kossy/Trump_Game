@@ -65,7 +65,7 @@ class Deck{
 }
 
 class Dealer{
-
+    public $table;
     function startGame(int $amount_of_Players, string $gameMode): array{
         $table = [
             "players"=>[],
@@ -84,12 +84,22 @@ class Dealer{
             array_push($table["players"], $playerCard);
         }
 
-        return $table["players"];
+        return $table;
     }
 
     function initial_Cards(string $gameMode): int{
         if ($gameMode == "poker") return 5;
         if ($gameMode == "21") return 2;
     }
-}
 
+    function printTableInformation(array $table){
+        echo "Amount of players: " . count($table["players"]) . "... Game mode: " . $table["gameMode"] . ". At this table: " . PHP_EOL;
+
+        for ($i = 0; $i < count($table["players"]); $i++){
+            echo "Player " . ($i + 1) . " hand is: " . PHP_EOL;
+            for ($j = 0; $j < count($table["players"][$i]); $j++){
+                echo $table["players"][$i][$j]->getCardString() . PHP_EOL;
+            }
+        }
+    }
+}
