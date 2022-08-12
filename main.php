@@ -102,4 +102,53 @@ class Dealer{
             }
         }
     }
+
+    function score21Individual(array $cards): int{
+        $value = 0;
+
+        for ($i = 0; $i < count($cards); $i++){
+            $value += $cards[$i]->intValue;
+        }
+        if ($value > 21) $value = 0;
+        return $value;
+    }
+
+    function winnerOf21(array $table){
+        $points = [];
+        $cache = [];
+        for ($i = 0; $i < count($table["players"]); $i++){
+            $point = $this->score21Individual($table["players"][$i]);
+            array_push($points, $point);
+
+            if ($cache[$point] >= 1) $cache[$point] += 1;
+            else $cache[$point] = 1;
+        }
+        $HelperFunctions = new HelperFunctions();
+        $winnerIndex = $HelperFunctions->maxInArrayIndex($points);
+        if ($cache[$points[$winnerIndex]] > 1) return "It is a draw";
+        else if ($cache[$points[$winnerIndex]] >= 0) return "Player" . ($winnerIndex + 1) . "is the winner";
+        else return "No winners...";
+    }
 }
+
+class HelperFunctions{
+    
+    function maxInArrayIndex(array $intArr){
+        $maxIndex = 0;
+        $maxValue = $intArr[0];
+
+        for ($i = 0; $i < count($intArr); $i++){
+            if ($intArr[$i] > $maxValue){
+                $maxValue = $intArr[$i];
+                $maxIndex = $i;
+            }
+        }
+        return $maxIndex;
+    }
+}
+
+$table = new Dealer();
+$table1 = $table->startGame(4, "21");
+
+$table->printTableInformation($table1);
+$table->winnerOf21($table1);
