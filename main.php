@@ -63,3 +63,33 @@ class Deck{
         return array_pop($this->deck);
     }
 }
+
+class Dealer{
+
+    function startGame(int $amount_of_Players, string $gameMode): array{
+        $table = [
+            "players"=>[],
+            "gameMode"=>$gameMode,
+            "deck"=>new Deck(),
+        ];
+
+        $table["deck"]->shuffleDeck();
+
+        for ($i = 0; $i < $amount_of_Players; $i++) {
+            $playerCard = [];
+
+            for ($j = 0; $j < $this->initial_Cards($gameMode); $j++) {
+                array_push($playerCard, $table["deck"]->draw()); 
+            }
+            array_push($table["players"], $playerCard);
+        }
+
+        return $table["players"];
+    }
+
+    function initial_Cards(string $gameMode): int{
+        if ($gameMode == "poker") return 5;
+        if ($gameMode == "21") return 2;
+    }
+}
+
